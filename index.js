@@ -1,6 +1,6 @@
 const Discord = require('discord.js')
-const tesseract = require("node-tesseract-ocr")
 const client =new Discord.Client();
+const axios = require('axios')
 const prefix='!';
 const tes = require('tesseract.js')
 client.once('ready',()=>{
@@ -18,24 +18,14 @@ client.on('message',msg=>{
     const link=args[0]
     performOcr(msg,link)
   }
+  else if(command=='ocrfile'){
+    const file = msg.attachments.first();
+    const link = file.url
+    performOcr(msg,link)
+  }
 })
 
 function performOcr(msg,link){
-//   const config = {
-//   lang: "eng",
-// }
-
-// tesseract
-//   .recognize(link, config)
-//   .then((text) => {
-//     console.log("Result:", text)
-//   })
-//   .catch((error) => {
-//     console.log(error.message)
-//   })
-// }
-
-
  tes.recognize(link, 'eng'
 ).then(({ data: { text } }) => {
   console.log(text);
